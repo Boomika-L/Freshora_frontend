@@ -68,3 +68,23 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+
+### 'DAY 1'
+designed a website UI contents using Figma with 3 variance in sizes [laptop,mobile,tablet]
+
+### 'DAY2'
+created a login and signup page and converted a design as webpage with html and css
+
+### 'DAY3'
+created around 4 to 5 pages in website with html ,css and bootsrap
+
+### 'DAY4'
+updated the contents of login and signup page with javascript 
+
+### 'day5'
+ converted the things to an react components  and deployed the completed pages using netlify
+
+### 'day6'
+updated code with usestate ,useeffect,props and data is stored in localstorage
