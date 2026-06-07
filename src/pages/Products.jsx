@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
-
+import { useLocation, useNavigate } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 import Navbar from "../components/Navbar";
 
@@ -42,7 +42,7 @@ function Products() {
   
     if (!email) {
       alert("Please login first to add items to cart");
-      navigate("/login"); // optional but recommended
+      navigate("/login"); 
       return;
     }
 
