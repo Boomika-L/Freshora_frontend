@@ -11,12 +11,13 @@ html {
 
 body,
 #root {
-  background: #f8f5ec;
+  background: #fffbeb;
   color: #1f3b2d;
   overflow-x: hidden;
   position: relative;
   min-height: 100vh;
 }
+
 
 .circle {
   position: absolute;
@@ -27,7 +28,7 @@ body,
 .one {
   width: 350px;
   height: 350px;
-  background: #e4f4ec;
+  background: #dff7ea;
   top: -120px;
   left: -120px;
 }
@@ -35,97 +36,21 @@ body,
 .two {
   width: 250px;
   height: 250px;
-  background: #edf8f2;
+  background: #edfdf5;
   right: -80px;
   top: 500px;
 }
 
-/* NAVBAR */
-
-.navbar {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 18px 7%;
-  background: rgba(248, 245, 236, 0.95);
-  backdrop-filter: blur(10px);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
-}
-
-.logo-section {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.logo-section img {
-  width: 70px;
-}
-
-.logo-section h1 {
-  font-size: 42px;
-  color: #146356;
-  letter-spacing: 2px;
-}
-
-nav {
-  display: flex;
-  align-items: center;
-  gap: 35px;
-}
-
-nav a {
-  text-decoration: none;
-  color: #1f3b2d;
-  font-weight: 500;
-  transition: 0.3s;
-  position: relative;
-}
-
-nav a:hover {
-  color: #146356;
-}
-
-nav a::after {
-  content: "";
-  position: absolute;
-  width: 0%;
-  height: 2px;
-  background: #146356;
-  left: 0;
-  bottom: -5px;
-  transition: 0.4s;
-}
-
-nav a:hover::after {
-  width: 100%;
-}
-
-nav i {
-  font-size: 20px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-nav i:hover {
-  color: #146356;
-  transform: translateY(-3px);
-}
-
-/* HERO SECTION */
 
 .hero {
   width: 100%;
-  min-height: 100vh;
+  min-height: calc(100vh - 90px);
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 40px 7%;
   gap: 60px;
+  background-color: #fffbeb;
 }
 
 .hero-text {
@@ -186,14 +111,14 @@ nav i:hover {
 }
 
 .explore-btn {
-  background: white;
-  color: #146356;
+  background: #146356;
+  color: white;
   border: 2px solid #146356;
 }
 
 .explore-btn:hover {
-  background: #146356;
-  color: white;
+  background: white;
+  color: #146356;
 }
 
 .stats {
@@ -226,10 +151,9 @@ nav i:hover {
   transform: translateY(-10px);
 }
 
-/* FEATURES */
-
 .features-section {
   padding: 80px 7%;
+  background-color: #fffbeb;
 }
 
 .section-title {
@@ -296,7 +220,6 @@ nav i:hover {
   line-height: 28px;
 }
 
-/* OFFER SECTION */
 
 .offer-section {
   width: 100%;
@@ -304,6 +227,7 @@ nav i:hover {
   display: flex;
   align-items: center;
   gap: 60px;
+  background-color: #fffbeb;
 }
 
 .offer-image {
@@ -358,7 +282,6 @@ nav i:hover {
   transform: scale(1.05);
 }
 
-/* FOOTER */
 
 .footer {
   background: #163b2f;
@@ -404,7 +327,6 @@ nav i:hover {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* RESPONSIVE */
 
 @media (max-width: 992px) {
   .hero {
@@ -436,17 +358,6 @@ nav i:hover {
 }
 
 @media (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  nav {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-  }
-
   .hero-text h2 {
     font-size: 42px;
     line-height: 55px;
@@ -460,9 +371,5 @@ nav i:hover {
   .stats {
     flex-direction: column;
     gap: 20px;
-  }
-
-  .logo-section h1 {
-    font-size: 30px;
   }
 }

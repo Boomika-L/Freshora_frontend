@@ -1,0 +1,38 @@
+.add-product-container {
+  width: 600px;
+  margin: 50px auto;
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0px 0px 10px #ccc;
+}
+
+.add-product-container h1 {
+  text-align: center;
+  color: #146356;
+  margin-bottom: 20px;
+}
+
+.add-product-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.add-product-container input,
+.add-product-container select,
+.add-product-container textarea {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.add-product-container button {
+  padding: 12px;
+  border: none;
+  background: #146356;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+}

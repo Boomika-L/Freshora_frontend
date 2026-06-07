@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./../assests/styles/Signup.css";
 import registerImage from "./../assests/images/register.png";
 
 const Signup = ({ appName }) => {
   const navigate = useNavigate();
+
+  const API = process.env.REACT_APP_API_URL;
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -14,50 +17,60 @@ const Signup = ({ appName }) => {
 
   useEffect(() => {
     document.title = `${appName} - Signup`;
-    const savedName = localStorage.getItem("userName");
-    const savedEmail = localStorage.getItem("userEmail");
-    if (savedName) {
-      setName(savedName);
-    }
-    if (savedEmail) {
-      setEmail(savedEmail);
-    }
   }, [appName]);
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
-    if (
-      name === "" ||
-      email === "" ||
-      mobile === "" ||
-      password === "" ||
-      confirmPassword === ""
-    ) {
-      alert("Please fill all fields");
-    } else if (!pattern.test(email)) {
-      alert("Enter valid email");
-    } else if (mobile.length !== 10) {
-      alert("Enter valid mobile number");
-    } else if (password.length < 6) {
-      alert("Password must be at least 6 characters");
-    } else if (password !== confirmPassword) {
-      alert("Passwords do not match");
-    } else {
-      localStorage.setItem("userName", name);
-      localStorage.setItem("userEmail", email);
-      localStorage.setItem("userMobile", mobile);
-      alert("Account Created Successfully");
-      console.log("Name:", localStorage.getItem("userName"));
-      console.log("Email:", localStorage.getItem("userEmail"));
-      console.log("Mobile:", localStorage.getItem("userMobile"));
+
+    const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+    if (!name || !email || !mobile || !password || !confirmPassword) {
+      return alert("Please fill all fields");
+    }
+
+    if (!emailPattern.test(email)) {
+      return alert("Enter valid email");
+    }
+
+    if (mobile.length !== 10) {
+      return alert("Enter valid mobile number");
+    }
+
+    if (password.length < 6) {
+      return alert("Password must be at least 6 characters");
+    }
+
+    if (password !== confirmPassword) {
+      return alert("Passwords do not match");
+    }
+
+    try {
+      const response = await axios.post(
+        `${API}/api/user/signup`,
+        {
+          name,
+          email,
+          mobile,
+          password,
+        }
+      );
+
+      alert(response.data.message);
+
       setName("");
       setEmail("");
       setMobile("");
       setPassword("");
       setConfirmPassword("");
+
       navigate("/login");
+    } catch (error) {
+      console.error("Signup error:", error);
+
+      alert(error.response?.data?.message || "Registration Failed");
     }
   };
+
   return (
     <>
       <div className="circle one"></div>
@@ -71,7 +84,6 @@ const Signup = ({ appName }) => {
           <form onSubmit={handleSubmit}>
             <div className="input-box">
               <i className="fa fa-user"></i>
-
               <input
                 type="text"
                 placeholder="Full Name"
@@ -82,7 +94,6 @@ const Signup = ({ appName }) => {
 
             <div className="input-box">
               <i className="fa fa-envelope"></i>
-
               <input
                 type="email"
                 placeholder="Email Address"
@@ -93,7 +104,6 @@ const Signup = ({ appName }) => {
 
             <div className="input-box">
               <i className="fa fa-phone"></i>
-
               <input
                 type="text"
                 placeholder="Mobile Number"
@@ -104,7 +114,6 @@ const Signup = ({ appName }) => {
 
             <div className="input-box">
               <i className="fa fa-lock"></i>
-
               <input
                 type="password"
                 placeholder="Password"
@@ -115,7 +124,6 @@ const Signup = ({ appName }) => {
 
             <div className="input-box">
               <i className="fa fa-lock"></i>
-
               <input
                 type="password"
                 placeholder="Confirm Password"
@@ -128,8 +136,7 @@ const Signup = ({ appName }) => {
           </form>
 
           <div className="login-link">
-            Already have an account?{" "}
-            <Link to="/login">Login</Link>
+            Already have an account? <Link to="/login">Login</Link>
           </div>
         </div>
 

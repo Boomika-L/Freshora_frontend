@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./../assests/styles/Contact.css";
+import Navbar from "../components/Navbar";
 const Contact = ({ appName }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -32,6 +33,7 @@ const Contact = ({ appName }) => {
     setMessage("");
   };
   return (
+    <><Navbar></Navbar>
     <section className="contact">
       <div className="contact-info">
         <p className="tag">CONTACT US</p>
@@ -66,6 +68,7 @@ const Contact = ({ appName }) => {
         </form>
       </div>
     </section>
+    </>
   );
 };
 

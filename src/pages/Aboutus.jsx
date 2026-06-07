@@ -1,9 +1,10 @@
 import React from "react";
 import "./../assests/styles/Aboutus.css";
 import aboutImage from "./../assests/images/basket.png";
-
+import Navbar from "./../components/Navbar";
 const Aboutus = () => {
   return (
+    <><Navbar></Navbar>
     <section className="about">
       <div className="about-image">
         <img src={aboutImage} alt="About Freshora" />
@@ -33,6 +34,7 @@ const Aboutus = () => {
         </div>
       </div>
     </section>
+    </>
   );
 };
 

@@ -1,9 +1,12 @@
 import React from "react";
 import "./../assests/styles/Faq.css";
-
+import Navbar from "../components/Navbar";
 const Faq = () => {
   return (
+    <>
+     <Navbar />
     <section className="faq">
+       
       <h1>Frequently Asked Questions</h1>
       <div className="faq-box">
         <h3>How long does delivery take?</h3>
@@ -22,6 +25,7 @@ const Faq = () => {
         <p>UPI, Debit Card, Credit Card and Cash on Delivery.</p>
       </div>
     </section>
+    </>
   );
 };
 

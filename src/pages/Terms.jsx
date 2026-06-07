@@ -1,8 +1,9 @@
 import React from "react";
 import "./../assests/styles/Terms.css";
-
+import Navbar from "../components/Navbar";
 const Terms = () => {
   return (
+    <><Navbar></Navbar>
     <section className="terms">
       <h1>Terms & Conditions</h1>
 
@@ -34,6 +35,7 @@ const Terms = () => {
         <p>Your personal information is securely protected and never shared.</p>
       </div>
     </section>
+    </>
   );
 };
 

@@ -1,0 +1,119 @@
+body {
+  background: #fffbeb;
+  font-family: "Poppins", sans-serif;
+}
+
+.orders-page {
+  padding: 40px 7%;
+  min-height: 100vh;
+  color: #1f3b2d;
+}
+
+.orders-page h1 {
+  font-size: 40px;
+  margin-bottom: 30px;
+  color: #163b2f;
+}
+
+.empty {
+  font-size: 18px;
+  color: #666;
+}
+
+.orders-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 25px;
+}
+
+.order-card {
+  background: white;
+  border-radius: 25px;
+  padding: 25px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transition: 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.order-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 6px;
+  width: 100%;
+  background: #146356;
+}
+
+.order-card:hover {
+  transform: translateY(-8px);
+}
+
+.order-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.order-top h3 {
+  font-size: 18px;
+  color: #146356;
+}
+
+.status {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status.delivered {
+  background: #d4edda;
+  color: #155724;
+}
+
+.date {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.items {
+  margin-bottom: 15px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.item img {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.item p {
+  font-weight: 600;
+  color: #1f3b2d;
+}
+
+.item small {
+  color: #666;
+}
+
+.order-card h4 {
+  color: #146356;
+  font-size: 18px;
+  margin-top: 10px;
+}
