@@ -25,85 +25,91 @@ function Profile() {
   const userId = localStorage.getItem("userId");
   const userEmail = localStorage.getItem("userEmail");
 
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        if (!userEmail) return;
+ 
+  const fetchProfile = async () => {
+    try {
+      if (!userEmail) return;
 
-        const res = await axios.get(
-          `${API}/api/profile/${userEmail}`
-        );
+      const res = await axios.get(`${API}/api/profile/${userEmail}`);
+      setUser(res.data || {});
+    } catch (error) {
+      console.log("Profile Error:", error);
+    }
+  };
 
-        setUser(res.data || {});
-      } catch (error) {
-        console.log("Profile Error:", error);
-      }
-    };
+  const fetchOrders = async () => {
+    try {
+      if (!userId) return;
 
-    const fetchOrders = async () => {
-      try {
-        if (!userId) return;
+      const res = await axios.get(`${API}/api/orders/myorders/${userId}`);
 
-        const res = await axios.get(
-          `${API}/api/orders/myorders/${userId}`
-        );
+      const ordersData = res.data || [];
 
-        const ordersData = res.data || [];
+      setOrders(ordersData);
 
-        setOrders(ordersData);
+      setStats((prev) => ({
+        ...prev,
+        totalOrders: ordersData.length,
+        totalSpending: ordersData.reduce(
+          (sum, order) => sum + (order.totalAmount || 0),
+          0
+        ),
+      }));
+    } catch (error) {
+      console.log("Orders Error:", error);
+    }
+  };
 
-        setStats((prev) => ({
-          ...prev,
-          totalOrders: ordersData.length,
-          totalSpending: ordersData.reduce(
-            (sum, order) => sum + (order.totalAmount || 0),
-            0
-          ),
-        }));
-      } catch (error) {
-        console.log("Orders Error:", error);
-      }
-    };
+  const fetchWishlist = async () => {
+    try {
+      if (!userId) return;
 
-    const fetchWishlist = async () => {
-      try {
-        if (!userId) return;
+      const res = await axios.get(
+        `${API}/api/wishlist/user/${userId}`
+      );
 
-        const res = await axios.get(
-          `${API}/api/wishlist/user/${userId}`
-        );
+      setStats((prev) => ({
+        ...prev,
+        wishlistItems: res.data?.length || 0,
+      }));
+    } catch (error) {
+      console.log("Wishlist Error:", error);
+    }
+  };
 
-        setStats((prev) => ({
-          ...prev,
-          wishlistItems: res.data?.length || 0,
-        }));
-      } catch (error) {
-        console.log("Wishlist Error:", error);
-      }
-    };
+  const fetchCart = async () => {
+    try {
+      if (!userEmail) return;
 
-    const fetchCart = async () => {
-      try {
-        if (!userId) return;
+      const res = await axios.get(
+        `${API}/api/cart/all/${userEmail}`
+      );
 
-        const res = await axios.get(
-          `${API}/api/cart/user/${userId}`
-        );
+      setStats((prev) => ({
+        ...prev,
+        cartItems: res.data?.length || 0,
+      }));
+    } catch (error) {
+      console.log("Cart Error:", error);
+    }
+  };
 
-        setStats((prev) => ({
-          ...prev,
-          cartItems: res.data?.length || 0,
-        }));
-      } catch (error) {
-        console.log("Cart Error:", error);
-      }
-    };
 
+  const loadData = () => {
     fetchProfile();
     fetchOrders();
     fetchWishlist();
     fetchCart();
-  }, [API, userId, userEmail]);
+  };
+
+  
+  useEffect(() => {
+    loadData();
+
+    window.addEventListener("focus", loadData);
+
+    return () => window.removeEventListener("focus", loadData);
+  }, []);
 
   return (
     <>
@@ -201,6 +207,7 @@ function Profile() {
               </tbody>
             </table>
           </div>
+
         </div>
       </div>
     </>
