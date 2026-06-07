@@ -60,39 +60,43 @@ function Profile() {
     }
   };
 
-  const fetchWishlist = async () => {
-    try {
-      if (!userId) return;
+const fetchWishlist = async () => {
+  try {
+    console.log("userId:", userId);
 
-      const res = await axios.get(
-        `${API}/api/wishlist/all/${userId}`
-      );
+    const res = await axios.get(
+      `${API}/api/wishlist/all/${userId}`
+    );
 
-      setStats((prev) => ({
-        ...prev,
-        wishlistItems: res.data?.length || 0,
-      }));
-    } catch (error) {
-      console.log("Wishlist Error:", error);
-    }
-  };
+    console.log("Wishlist Data:", res.data);
 
-  const fetchCart = async () => {
-    try {
-      if (!userEmail) return;
+    setStats((prev) => ({
+      ...prev,
+      wishlistItems: res.data.length,
+    }));
+  } catch (error) {
+    console.log("Wishlist Error:", error);
+  }
+};
 
-      const res = await axios.get(
-        `${API}/api/cart/all/${userEmail}`
-      );
+const fetchCart = async () => {
+  try {
+    console.log("userEmail:", userEmail);
 
-      setStats((prev) => ({
-        ...prev,
-        cartItems: res.data?.length || 0,
-      }));
-    } catch (error) {
-      console.log("Cart Error:", error);
-    }
-  };
+    const res = await axios.get(
+      `${API}/api/cart/all/${userEmail}`
+    );
+
+    console.log("Cart Data:", res.data);
+
+    setStats((prev) => ({
+      ...prev,
+      cartItems: res.data.length,
+    }));
+  } catch (error) {
+    console.log("Cart Error:", error);
+  }
+};
 
 
   const loadData = () => {
