@@ -18,20 +18,21 @@ function Products() {
     new URLSearchParams(location.search).get("search") || "";
 
   useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(
+          `${API}/api/product/all-products`
+        );
+
+        setProducts(response.data?.products || []);
+      } catch (error) {
+        console.log("Fetch products error:", error);
+        setProducts([]);
+      }
+    };
+
     fetchProducts();
-  }, []);
-
-  const fetchProducts = async () => {
-    try {
-      const response = await axios.get(
-        `${API}/api/product/all-products`
-      );
-
-      setProducts(response.data.products);
-    } catch (error) {
-      console.log("Fetch products error:", error);
-    }
-  };
+  }, [API]);
 
   const addToCart = async (product) => {
     try {
@@ -59,9 +60,9 @@ function Products() {
       category === "All" || item.category === category;
 
     const matchSearch =
-      item.name.toLowerCase().includes(
-        searchQuery.toLowerCase()
-      );
+      item.name
+        ?.toLowerCase()
+        .includes(searchQuery.toLowerCase());
 
     return matchCategory && matchSearch;
   });

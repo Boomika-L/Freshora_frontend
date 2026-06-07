@@ -11,33 +11,44 @@ function Wishlist() {
   const userId = localStorage.getItem("userId");
   const API = process.env.REACT_APP_API_URL;
 
-  const fetchWishlist = async () => {
-    try {
-      if (!userId) {
-        setItems([]);
-        setLoading(false);
-        return;
-      }
+  useEffect(() => {
+    const fetchWishlist = async () => {
+      try {
+        if (!userId) {
+          setItems([]);
+          setLoading(false);
+          return;
+        }
 
+        const res = await axios.get(
+          `${API}/api/wishlist/all/${userId}`
+        );
+
+        setItems(res.data || []);
+      } catch (error) {
+        console.log(
+          "Wishlist fetch error:",
+          error.response?.data || error.message
+        );
+        setItems([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchWishlist();
+  }, [API, userId]);
+
+  const refreshWishlist = async () => {
+    try {
       const res = await axios.get(
         `${API}/api/wishlist/all/${userId}`
       );
-
       setItems(res.data || []);
     } catch (error) {
-      console.log(
-        "Wishlist fetch error:",
-        error.response?.data || error.message
-      );
-      setItems([]);
-    } finally {
-      setLoading(false);
+      console.log("Refresh error:", error.message);
     }
   };
-
-  useEffect(() => {
-    fetchWishlist();
-  }, []);
 
   const removeItem = async (id) => {
     try {
@@ -45,7 +56,7 @@ function Wishlist() {
         `${API}/api/wishlist/delete/${id}`
       );
 
-      fetchWishlist();
+      refreshWishlist();
     } catch (error) {
       console.log("Delete error:", error.message);
     }
@@ -59,7 +70,7 @@ function Wishlist() {
 
       alert("Moved To Cart Successfully");
 
-      fetchWishlist();
+      refreshWishlist();
     } catch (error) {
       console.log("Move to cart error:", error);
       alert("Failed To Move Item");

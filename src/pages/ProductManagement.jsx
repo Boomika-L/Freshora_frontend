@@ -10,20 +10,21 @@ function ProductManagement() {
   const API = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await axios.get(
+          `${API}/api/product/all-products`
+        );
+
+        setProducts(res.data?.products || []);
+      } catch (error) {
+        console.log("Fetch products error:", error);
+        setProducts([]);
+      }
+    };
+
     fetchProducts();
-  }, []);
-
-  const fetchProducts = async () => {
-    try {
-      const res = await axios.get(
-        `${API}/api/product/all-products`
-      );
-
-      setProducts(res.data.products);
-    } catch (error) {
-      console.log("Fetch products error:", error);
-    }
-  };
+  }, [API]);
 
   const deleteProduct = async (id) => {
     const confirmDelete = window.confirm(
@@ -37,9 +38,14 @@ function ProductManagement() {
         `${API}/api/product/delete-product/${id}`
       );
 
-      alert(res.data.message);
+      alert(res.data?.message || "Product deleted");
 
-      fetchProducts();
+      // refresh list after delete
+      const updated = await axios.get(
+        `${API}/api/product/all-products`
+      );
+
+      setProducts(updated.data?.products || []);
     } catch (error) {
       console.log("Delete product error:", error);
       alert("Failed To Delete Product");

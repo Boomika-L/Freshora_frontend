@@ -22,89 +22,88 @@ function Profile() {
 
   const API = process.env.REACT_APP_API_URL;
 
+  const userId = localStorage.getItem("userId");
+  const userEmail = localStorage.getItem("userEmail");
+
   useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        if (!userEmail) return;
+
+        const res = await axios.get(
+          `${API}/api/profile/${userEmail}`
+        );
+
+        setUser(res.data || {});
+      } catch (error) {
+        console.log("Profile Error:", error);
+      }
+    };
+
+    const fetchOrders = async () => {
+      try {
+        if (!userId) return;
+
+        const res = await axios.get(
+          `${API}/api/orders/myorders/${userId}`
+        );
+
+        const ordersData = res.data || [];
+
+        setOrders(ordersData);
+
+        setStats((prev) => ({
+          ...prev,
+          totalOrders: ordersData.length,
+          totalSpending: ordersData.reduce(
+            (sum, order) => sum + (order.totalAmount || 0),
+            0
+          ),
+        }));
+      } catch (error) {
+        console.log("Orders Error:", error);
+      }
+    };
+
+    const fetchWishlist = async () => {
+      try {
+        if (!userId) return;
+
+        const res = await axios.get(
+          `${API}/api/wishlist/user/${userId}`
+        );
+
+        setStats((prev) => ({
+          ...prev,
+          wishlistItems: res.data?.length || 0,
+        }));
+      } catch (error) {
+        console.log("Wishlist Error:", error);
+      }
+    };
+
+    const fetchCart = async () => {
+      try {
+        if (!userId) return;
+
+        const res = await axios.get(
+          `${API}/api/cart/user/${userId}`
+        );
+
+        setStats((prev) => ({
+          ...prev,
+          cartItems: res.data?.length || 0,
+        }));
+      } catch (error) {
+        console.log("Cart Error:", error);
+      }
+    };
+
     fetchProfile();
     fetchOrders();
     fetchWishlist();
     fetchCart();
-  }, []);
-
-  const fetchProfile = async () => {
-    try {
-      const email = localStorage.getItem("userEmail");
-      if (!email) return;
-
-      const res = await axios.get(
-        `${API}/api/profile/${email}`
-      );
-
-      setUser(res.data);
-    } catch (error) {
-      console.log("Profile Error:", error);
-    }
-  };
-
-  const fetchOrders = async () => {
-    try {
-      const userId = localStorage.getItem("userId");
-      if (!userId) return;
-
-      const res = await axios.get(
-        `${API}/api/orders/myorders/${userId}`
-      );
-
-      const ordersData = res.data || [];
-
-      setOrders(ordersData);
-
-      setStats((prev) => ({
-        ...prev,
-        totalOrders: ordersData.length,
-        totalSpending: ordersData.reduce(
-          (sum, order) => sum + (order.totalAmount || 0),
-          0
-        ),
-      }));
-    } catch (error) {
-      console.log("Orders Error:", error);
-    }
-  };
-
-  const fetchWishlist = async () => {
-    try {
-      const userId = localStorage.getItem("userId");
-      if (!userId) return;
-
-      const res = await axios.get(
-        `${API}/api/wishlist/user/${userId}`
-      );
-
-      setStats((prev) => ({
-        ...prev,
-        wishlistItems: res.data?.length || 0,
-      }));
-    } catch (error) {
-      console.log("Wishlist Error:", error);
-    }
-  };
-
-  const fetchCart = async () => {
-    try {
-      const userId = localStorage.getItem("userId");
-      if (!userId) return;
-
-      const res = await axios.get(
-        `${API}/api/cart/user/${userId}`
-      );
-
-      setStats((prev) => ({
-        ...prev,
-        cartItems: res.data?.length || 0,
-      }));
-    } catch (error) {
-      console.log("Cart Error:", error);
-    }
-  };
+  }, [API, userId, userEmail]);
 
   return (
     <>
@@ -171,9 +170,7 @@ function Profile() {
                   orders.map((order) => (
                     <tr key={order._id}>
                       <td>
-                        {order.items
-                          ?.map((item) => item.name)
-                          .join(", ")}
+                        {order.items?.map((item) => item.name).join(", ")}
                       </td>
 
                       <td>

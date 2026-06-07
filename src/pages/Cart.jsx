@@ -10,33 +10,52 @@ function Cart() {
 
   const API = process.env.REACT_APP_API_URL;
 
-  const getCart = async () => {
+  useEffect(() => {
+    const getCart = async () => {
+      try {
+        const email = localStorage.getItem("userEmail");
+
+        if (!email || !API) {
+          setCartItems([]);
+          return;
+        }
+
+        const res = await axios.get(
+          `${API}/api/cart/all/${email}`
+        );
+
+        setCartItems(res.data || []);
+      } catch (error) {
+        console.log("Get cart error:", error);
+        setCartItems([]);
+      }
+    };
+
+    getCart();
+  }, [API]); 
+
+  const refreshCart = async () => {
     try {
-      const userEmail = localStorage.getItem("userEmail");
+      const email = localStorage.getItem("userEmail");
+      if (!email) return;
 
       const res = await axios.get(
-        `${API}/api/cart/all/${userEmail}`
+        `${API}/api/cart/all/${email}`
       );
 
-      setCartItems(res.data);
+      setCartItems(res.data || []);
     } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(() => {
-    getCart();
-  }, []);
-
   const increaseQty = async (item) => {
     try {
       await axios.put(
         `${API}/api/cart/update/${item._id}`,
-        {
-          quantity: item.quantity + 1,
-        }
+        { quantity: item.quantity + 1 }
       );
-      getCart();
+      refreshCart();
     } catch (error) {
       console.log(error);
     }
@@ -48,11 +67,9 @@ function Cart() {
     try {
       await axios.put(
         `${API}/api/cart/update/${item._id}`,
-        {
-          quantity: item.quantity - 1,
-        }
+        { quantity: item.quantity - 1 }
       );
-      getCart();
+      refreshCart();
     } catch (error) {
       console.log(error);
     }
@@ -63,7 +80,8 @@ function Cart() {
       await axios.delete(
         `${API}/api/cart/delete/${id}`
       );
-      getCart();
+
+      refreshCart();
     } catch (error) {
       console.log(error);
     }
@@ -95,43 +113,20 @@ function Cart() {
               {cartItems.map((item) => (
                 <div className="cart-item" key={item._id}>
                   <div className="cart-left">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="cart-image"
-                    />
+                    <img src={item.image} alt={item.name} />
 
                     <div className="cart-details">
                       <h3>{item.name}</h3>
-
                       <p>Category: {item.category}</p>
-
-                      <h4 className="cart-price">₹{item.price}</h4>
+                      <h4>₹{item.price}</h4>
 
                       <div className="quantity-box">
-                        <button
-                          className="qty-btn"
-                          onClick={() => decreaseQty(item)}
-                        >
-                          −
-                        </button>
-
-                        <span className="qty-value">
-                          {item.quantity}
-                        </span>
-
-                        <button
-                          className="qty-btn"
-                          onClick={() => increaseQty(item)}
-                        >
-                          +
-                        </button>
+                        <button onClick={() => decreaseQty(item)}>−</button>
+                        <span>{item.quantity}</span>
+                        <button onClick={() => increaseQty(item)}>+</button>
                       </div>
 
-                      <button
-                        className="remove-btn"
-                        onClick={() => removeItem(item._id)}
-                      >
+                      <button onClick={() => removeItem(item._id)}>
                         REMOVE
                       </button>
                     </div>
@@ -143,29 +138,27 @@ function Cart() {
             <div className="bill-summary">
               <h2>PRICE DETAILS</h2>
 
-              <div className="bill-row">
+              <div>
                 <span>Price ({cartItems.length} items)</span>
                 <span>₹{subTotal}</span>
               </div>
 
-              <div className="bill-row">
+              <div>
                 <span>Delivery Charges</span>
                 <span>₹{deliveryCharge}</span>
               </div>
 
-              <div className="bill-row total-row">
-                <span>Total Amount</span>
+              <div>
+                <span>Total</span>
                 <span>₹{total}</span>
               </div>
 
               <button
-                className="checkout-btn"
                 onClick={() => {
                   localStorage.setItem(
                     "checkoutItems",
                     JSON.stringify(cartItems)
                   );
-
                   navigate("/billing");
                 }}
               >

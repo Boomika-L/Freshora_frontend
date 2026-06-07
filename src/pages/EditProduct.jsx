@@ -16,17 +16,27 @@ function EditProduct() {
   });
 
   useEffect(() => {
-    fetchProduct();
-  }, []);
+    const fetchProduct = async () => {
+      try {
+        const res = await axios.get(
+          `${API}/api/product/${id}`
+        );
 
-  const fetchProduct = async () => {
-    try {
-      const res = await axios.get(`${API}/api/product/${id}`);
-      setProduct(res.data);
-    } catch (error) {
-      console.log("Fetch product error:", error);
+        setProduct(res.data || {
+          name: "",
+          category: "",
+          price: "",
+          image: "",
+        });
+      } catch (error) {
+        console.log("Fetch product error:", error);
+      }
+    };
+
+    if (id) {
+      fetchProduct();
     }
-  };
+  }, [API, id]);
 
   const handleChange = (e) => {
     setProduct({

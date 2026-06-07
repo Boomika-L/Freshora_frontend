@@ -10,17 +10,18 @@ const Offers = () => {
   const API = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
-    fetchOffers();
-  }, []);
+    const fetchOffers = async () => {
+      try {
+        const res = await axios.get(`${API}/api/offers`);
+        setOffers(res.data || []);
+      } catch (error) {
+        console.log("Offers fetch error:", error);
+        setOffers([]);
+      }
+    };
 
-  const fetchOffers = async () => {
-    try {
-      const res = await axios.get(`${API}/api/offers`);
-      setOffers(res.data);
-    } catch (error) {
-      console.log("Offers fetch error:", error);
-    }
-  };
+    fetchOffers();
+  }, [API]);
 
   return (
     <>
@@ -30,20 +31,26 @@ const Offers = () => {
         <h1>🔥 Freshora Offers</h1>
 
         <div className="offers-grid">
-          {offers.map((offer) => (
-            <div className="offer-card" key={offer._id}>
-              <img src={offer.image} alt={offer.title} />
+          {offers.length > 0 ? (
+            offers.map((offer) => (
+              <div className="offer-card" key={offer._id}>
+                <img src={offer.image} alt={offer.title} />
 
-              <h2>{offer.title}</h2>
-              <p>{offer.description}</p>
+                <h2>{offer.title}</h2>
+                <p>{offer.description}</p>
 
-              <span>{offer.discount}</span>
+                <span>{offer.discount}</span>
 
-              <Link to="/products">
-                <button>Shop Now</button>
-              </Link>
-            </div>
-          ))}
+                <Link to="/products">
+                  <button>Shop Now</button>
+                </Link>
+              </div>
+            ))
+          ) : (
+            <p style={{ textAlign: "center" }}>
+              No offers available
+            </p>
+          )}
         </div>
       </div>
     </>

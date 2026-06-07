@@ -8,19 +8,21 @@ function Users() {
   const API = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
-    fetchUsers();
-  }, []);
+    const fetchUsers = async () => {
+      try {
+        const res = await axios.get(
+          `${API}/api/admin/users`
+        );
 
-  const fetchUsers = async () => {
-    try {
-      const res = await axios.get(
-        `${API}/api/admin/users`
-      );
-      setUsers(res.data);
-    } catch (err) {
-      console.log("Fetch users error:", err);
-    }
-  };
+        setUsers(res.data || []);
+      } catch (err) {
+        console.log("Fetch users error:", err);
+        setUsers([]);
+      }
+    };
+
+    fetchUsers();
+  }, [API]);
 
   return (
     <AdminLayout>

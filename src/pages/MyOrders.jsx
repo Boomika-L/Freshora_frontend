@@ -7,25 +7,29 @@ const MyOrders = () => {
   const [orders, setOrders] = useState([]);
 
   const API = process.env.REACT_APP_API_URL;
-
   const userId = localStorage.getItem("userId");
 
   useEffect(() => {
-    if (userId) {
-      fetchOrders();
-    }
-  }, []);
+    const fetchOrders = async () => {
+      try {
+        if (!userId) {
+          setOrders([]);
+          return;
+        }
 
-  const fetchOrders = async () => {
-    try {
-      const res = await axios.get(
-        `${API}/api/orders/myorders/${userId}`
-      );
-      setOrders(res.data);
-    } catch (err) {
-      console.log("Fetch orders error:", err);
-    }
-  };
+        const res = await axios.get(
+          `${API}/api/orders/myorders/${userId}`
+        );
+
+        setOrders(res.data || []);
+      } catch (err) {
+        console.log("Fetch orders error:", err);
+        setOrders([]);
+      }
+    };
+
+    fetchOrders();
+  }, [API, userId]);
 
   return (
     <>
@@ -54,11 +58,13 @@ const MyOrders = () => {
 
                 <p className="date">
                   Date:{" "}
-                  {new Date(order.orderDate).toLocaleDateString()}
+                  {order.orderDate
+                    ? new Date(order.orderDate).toLocaleDateString()
+                    : "N/A"}
                 </p>
 
                 <div className="items">
-                  {order.items.map((item, i) => (
+                  {order.items?.map((item, i) => (
                     <div className="item" key={i}>
                       <img src={item.image} alt={item.name} />
 

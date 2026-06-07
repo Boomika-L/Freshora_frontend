@@ -13,27 +13,27 @@ function AdminDashboard() {
   const API = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await axios.get(`${API}/api/admin/dashboard`);
+        setStats(res.data);
+      } catch (error) {
+        console.log("Error fetching stats:", error);
+      }
+    };
+
+    const fetchProducts = async () => {
+      try {
+        const res = await axios.get(`${API}/api/product/all-products`);
+        setProducts(res.data.products);
+      } catch (error) {
+        console.log("Error fetching products:", error);
+      }
+    };
+
     fetchStats();
     fetchProducts();
-  }, []);
-
-  const fetchStats = async () => {
-    try {
-      const res = await axios.get(`${API}/api/admin/dashboard`);
-      setStats(res.data);
-    } catch (error) {
-      console.log("Error fetching stats:", error);
-    }
-  };
-
-  const fetchProducts = async () => {
-    try {
-      const res = await axios.get(`${API}/api/product/all-products`);
-      setProducts(res.data.products);
-    } catch (error) {
-      console.log("Error fetching products:", error);
-    }
-  };
+  }, [API]);
 
   const deleteProduct = async (id) => {
     if (!window.confirm("Delete this product?")) return;
@@ -41,8 +41,12 @@ function AdminDashboard() {
     try {
       await axios.delete(`${API}/api/product/delete/${id}`);
 
-      fetchProducts();
-      fetchStats();
+      const res = await axios.get(`${API}/api/product/all-products`);
+      setProducts(res.data.products);
+
+      const statsRes = await axios.get(`${API}/api/admin/dashboard`);
+      setStats(statsRes.data);
+
     } catch (error) {
       console.log("Delete error:", error);
     }
