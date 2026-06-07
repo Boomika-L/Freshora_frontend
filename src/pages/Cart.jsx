@@ -32,7 +32,7 @@ function Cart() {
     };
 
     getCart();
-  }, [API]); 
+  }, [API]);
 
   const refreshCart = async () => {
     try {
@@ -109,24 +109,51 @@ function Cart() {
           </div>
         ) : (
           <div className="cart-layout">
+
+            {/* LEFT SIDE */}
             <div className="cart-products">
               {cartItems.map((item) => (
                 <div className="cart-item" key={item._id}>
                   <div className="cart-left">
-                    <img src={item.image} alt={item.name} />
+
+                    <img
+                      className="cart-image"
+                      src={item.image}
+                      alt={item.name}
+                    />
 
                     <div className="cart-details">
                       <h3>{item.name}</h3>
-                      <p>Category: {item.category}</p>
-                      <h4>₹{item.price}</h4>
+                      <p>{item.category}</p>
+
+                      <h4 className="cart-price">
+                        ₹{item.price}
+                      </h4>
 
                       <div className="quantity-box">
-                        <button onClick={() => decreaseQty(item)}>−</button>
-                        <span>{item.quantity}</span>
-                        <button onClick={() => increaseQty(item)}>+</button>
+                        <button
+                          className="qty-btn"
+                          onClick={() => decreaseQty(item)}
+                        >
+                          −
+                        </button>
+
+                        <span className="qty-value">
+                          {item.quantity}
+                        </span>
+
+                        <button
+                          className="qty-btn"
+                          onClick={() => increaseQty(item)}
+                        >
+                          +
+                        </button>
                       </div>
 
-                      <button onClick={() => removeItem(item._id)}>
+                      <button
+                        className="remove-btn"
+                        onClick={() => removeItem(item._id)}
+                      >
                         REMOVE
                       </button>
                     </div>
@@ -135,25 +162,27 @@ function Cart() {
               ))}
             </div>
 
+            {/* RIGHT SIDE */}
             <div className="bill-summary">
               <h2>PRICE DETAILS</h2>
 
-              <div>
+              <div className="bill-row">
                 <span>Price ({cartItems.length} items)</span>
                 <span>₹{subTotal}</span>
               </div>
 
-              <div>
+              <div className="bill-row">
                 <span>Delivery Charges</span>
                 <span>₹{deliveryCharge}</span>
               </div>
 
-              <div>
+              <div className="bill-row total-row">
                 <span>Total</span>
                 <span>₹{total}</span>
               </div>
 
               <button
+                className="checkout-btn"
                 onClick={() => {
                   localStorage.setItem(
                     "checkoutItems",
@@ -165,6 +194,7 @@ function Cart() {
                 PROCEED TO BILLING
               </button>
             </div>
+
           </div>
         )}
       </div>
