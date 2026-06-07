@@ -35,25 +35,32 @@ function Products() {
   }, [API]);
 
   const addToCart = async (product) => {
-    try {
-      await axios.post(
-        `${API}/api/cart/add`,
-        {
-          productId: product._id,
-          name: product.name,
-          image: product.image,
-          price: product.price,
-          quantity: 1,
-          userEmail: localStorage.getItem("userEmail"),
-        }
-      );
+  try {
+    const API = process.env.REACT_APP_API_URL;
+    const email = localStorage.getItem("userEmail");
 
-      alert("Product Added To Cart");
-    } catch (error) {
-      console.log("Add to cart error:", error);
-      alert("Failed To Add Cart");
+  
+    if (!email) {
+      alert("Please login first to add items to cart");
+      navigate("/login"); // optional but recommended
+      return;
     }
-  };
+
+    await axios.post(`${API}/api/cart/add`, {
+      productId: product._id,
+      name: product.name,
+      image: product.image,
+      price: product.price,
+      quantity: 1,
+      userEmail: email,
+    });
+
+    alert("Product Added To Cart");
+  } catch (error) {
+    console.log("Add to cart error:", error);
+    alert("Failed To Add Cart");
+  }
+};
 
   const filteredProducts = products.filter((item) => {
     const matchCategory =
