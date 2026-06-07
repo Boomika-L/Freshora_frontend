@@ -65,7 +65,7 @@ function Profile() {
       if (!userId) return;
 
       const res = await axios.get(
-        `${API}/api/wishlist/user/${userId}`
+        `${API}/api/wishlist/all/${userId}`
       );
 
       setStats((prev) => ({
