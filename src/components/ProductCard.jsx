@@ -4,38 +4,43 @@ import axios from "axios";
 function ProductCard({ product, addToCart }) {
   const API = process.env.REACT_APP_API_URL;
 
-  const addToWishlist = async () => {
-    try {
-      const userId = localStorage.getItem("userId");
+const addToWishlist = async () => {
+  try {
+    const userId = localStorage.getItem("userId");
+    const userEmail = localStorage.getItem("userEmail");
 
-      if (!userId) {
-        alert("Please login first");
-        return;
-      }
-
-      if (!product) {
-        alert("Invalid product");
-        return;
-      }
-
-      await axios.post(`${API}/api/wishlist/add`, {
-        userId,
-        name: product.name,
-        category: product.category,
-        price: product.price,
-        image: product.image,
-      });
-
-      alert("Added To Wishlist ❤️");
-    } catch (error) {
-      console.log(
-        "Wishlist Error:",
-        error.response?.data || error.message
-      );
-
-      alert("Failed To Add Wishlist");
+    if (!userId || !userEmail) {
+      alert("Please login first");
+      return;
     }
-  };
+
+    if (!product) {
+      alert("Invalid product");
+      return;
+    }
+
+    await axios.post(`${API}/api/wishlist/add`, {
+      userId,
+      userEmail,
+      name: product.name,
+      category: product.category,
+      price: product.price,
+      image: product.image,
+    });
+
+    alert("Added To Wishlist ❤️");
+  } catch (error) {
+    console.log(
+      "Wishlist Error:",
+      error.response?.data || error.message
+    );
+
+    alert(
+      error.response?.data?.message ||
+      "Failed To Add Wishlist"
+    );
+  }
+};
 
   return (
     <div className="product-card">
