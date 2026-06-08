@@ -28,6 +28,9 @@ const Login = ({ appName }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    console.log("Login button clicked");
+    console.log("API URL:", API);
+
     if (!email || !password) {
       alert("Please fill all fields");
       return;
@@ -46,6 +49,8 @@ const Login = ({ appName }) => {
     }
 
     try {
+      console.log("Sending Login Request...");
+
       const response = await axios.post(
         `${API}/api/user/login`,
         {
@@ -53,6 +58,8 @@ const Login = ({ appName }) => {
           password,
         }
       );
+
+      console.log("Login Response:", response.data);
 
       const user = response.data.user;
 
@@ -73,13 +80,16 @@ const Login = ({ appName }) => {
         localStorage.setItem("userRole", user.role);
       }
 
-      console.log("LOGIN SUCCESS:", user);
-
       alert(response.data.message);
 
       navigate("/");
     } catch (error) {
-      console.error("Login error:", error);
+      console.error("Login Error:", error);
+
+      if (error.response) {
+        console.log("Status:", error.response.status);
+        console.log("Response Data:", error.response.data);
+      }
 
       alert(error.response?.data?.message || "Login Failed");
     }
@@ -102,8 +112,12 @@ const Login = ({ appName }) => {
           <form onSubmit={handleSubmit}>
             <div className="input-box">
               <i className="fa fa-envelope"></i>
+
               <input
                 type="email"
+                id="email"
+                name="email"
+                autoComplete="email"
                 placeholder="Email Address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -112,8 +126,12 @@ const Login = ({ appName }) => {
 
             <div className="input-box">
               <i className="fa fa-lock"></i>
+
               <input
                 type="password"
+                id="password"
+                name="password"
+                autoComplete="current-password"
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -130,14 +148,22 @@ const Login = ({ appName }) => {
                 Remember Me
               </label>
 
-              <Link to="/forgot-password">Forgot Password?</Link>
+              <Link to="/forgot-password">
+                Forgot Password?
+              </Link>
             </div>
 
-            <button type="submit">Login</button>
+            <button type="submit">
+              Login
+            </button>
           </form>
 
           <div className="signup-link">
-            Don't have an account? <Link to="/signup">Sign Up</Link>
+            Don't have an account?
+            {" "}
+            <Link to="/signup">
+              Sign Up
+            </Link>
           </div>
         </div>
       </div>
