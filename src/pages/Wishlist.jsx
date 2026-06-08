@@ -77,7 +77,10 @@ function Wishlist() {
 
     refreshWishlist();
   } catch (error) {
-    console.log("Move to cart error:", error);
+   console.log(
+  "Move to cart error:",
+  error.response?.data || error.message
+);
     alert("Failed To Move Item");
   }
 };
