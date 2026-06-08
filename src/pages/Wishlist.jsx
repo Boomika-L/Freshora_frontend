@@ -62,20 +62,25 @@ function Wishlist() {
     }
   };
 
-  const moveToCart = async (id) => {
-    try {
-      await axios.post(
-        `${API}/api/wishlist/move-to-cart/${id}`
-      );
+ const moveToCart = async (id) => {
+  try {
+    const userEmail = localStorage.getItem("userEmail");
 
-      alert("Moved To Cart Successfully");
+    await axios.post(
+      `${API}/api/wishlist/move-to-cart/${id}`,
+      {
+        userEmail,
+      }
+    );
 
-      refreshWishlist();
-    } catch (error) {
-      console.log("Move to cart error:", error);
-      alert("Failed To Move Item");
-    }
-  };
+    alert("Moved To Cart Successfully");
+
+    refreshWishlist();
+  } catch (error) {
+    console.log("Move to cart error:", error);
+    alert("Failed To Move Item");
+  }
+};
 
   return (
     <>
