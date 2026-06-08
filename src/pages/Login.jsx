@@ -130,7 +130,7 @@ const Login = ({ appName }) => {
                 Remember Me
               </label>
 
-              <Link to="#">Forgot Password?</Link>
+              <Link to="/forgot-password">Forgot Password?</Link>
             </div>
 
             <button type="submit">Login</button>

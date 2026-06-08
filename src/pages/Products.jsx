@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 import Navbar from "../components/Navbar";
 
@@ -10,7 +10,7 @@ import "./../assests/styles/Products.css";
 function Products() {
   const [products, setProducts] = useState([]);
   const [category, setCategory] = useState("All");
-
+   const navigate=useNavigate();
   const location = useLocation();
   const API = process.env.REACT_APP_API_URL;
 

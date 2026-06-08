@@ -20,6 +20,7 @@ import Orders from "../pages/Orders.jsx";
 import Users from "../pages/Users.jsx";
 import Offers from "../pages/Offers.jsx";
 import Billing from "../pages/Billing";
+import ForgotPassword from "../pages/ForgotPassword.jsx";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -31,7 +32,7 @@ const AppRoutes = () => {
       <Route path="/login" element={<Login appName="Freshora" />} />
       <Route path="/products" element={<Products />} />
       <Route path="/signup" element={<Signup appName="Freshora" />} />
-
+      <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/contact" element={<Contact appName="Freshora" />} />
       <Route path="/aboutus" element={<Aboutus />} />
       <Route path="/faq" element={<Faq />} />
