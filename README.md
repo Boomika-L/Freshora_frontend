@@ -88,3 +88,22 @@ updated the contents of login and signup page with javascript
 
 ### 'day6'
 updated code with usestate ,useeffect,props and data is stored in localstorage
+### 'workflow of freshora project'
+
+In the project of freshora [ecommerce for groceries] first using figma desinging part has been completed,next that designing part is simply converted as html,css code .after that for login and signup page js logic were written .and the remaining pages like contact,terms and conditions,frequently asked questions,aboutus like static content pages were developed using html and css .once after starting react all the codes were changed into a react based codes .And then useeffect ,usestate and props were used in project after that mongo db is connected and all the modules like
+          1.user module
+          2.product module
+          3.cart Module
+          4.order Module
+          5.wishlist module
+          6.Offer module
+          7.profile module
+          8.Admin Module 
+with backend has been developed
+
+
+### 'complete workflow'
+     user has been logged in into a freshora in products page all the products were shown move to cart,wishlist options were there after  move to cart,quantity increasing options and total bill summary is there after that order placing is there mobile number and address to be filled after that order has been confirmed 
+
+     Admin module
+      same as user admin also logged in into app but admin admin dashboard is there on that all user,products,orders and all the details were displayed add products also enabled only for admin.at the time of login app identies admin and user separately .
