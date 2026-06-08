@@ -99,21 +99,14 @@ const fetchCart = async () => {
 };
 
 
-  const loadData = () => {
-    fetchProfile();
-    fetchOrders();
-    fetchWishlist();
-    fetchCart();
-  };
+useEffect(() => {
+  fetchProfile();
+  fetchOrders();
+  fetchWishlist();
+  fetchCart();
 
-  
-  useEffect(() => {
-    loadData();
-
-    window.addEventListener("focus", loadData);
-
-    return () => window.removeEventListener("focus", loadData);
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, []);
 
   return (
     <>
