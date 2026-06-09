@@ -58,7 +58,7 @@ function Navbar() {
         />
             <h1>FRESHORA</h1>
       </Link>
-        <h1>FRESHORA</h1>
+        {/* <h1>FRESHORA</h1> */}
       </div>
 
       <div className="nav-links">
