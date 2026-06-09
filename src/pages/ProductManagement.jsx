@@ -96,25 +96,23 @@ function ProductManagement() {
                   <td>₹{product.price}</td>
                   <td>{product.stock}</td>
 
-                  <td>
-                    <button
-                      className="edit-btn"
-                      onClick={() =>
-                        navigate(
-                          `/admin/edit-product/${product._id}`
-                        )
-                      }
-                    >
-                      Edit
-                    </button>
+                <td className="actions-cell">
+  <button
+    className="edit-btn"
+    onClick={() =>
+      navigate(`/admin/edit-product/${product._id}`)
+    }
+  >
+    Edit
+  </button>
 
-                    <button
-                      className="delete-btn"
-                      onClick={() => deleteProduct(product._id)}
-                    >
-                      Delete
-                    </button>
-                  </td>
+  <button
+    className="delete-btn"
+    onClick={() => deleteProduct(product._id)}
+  >
+    Delete
+  </button>
+</td>
                 </tr>
               ))
             ) : (
