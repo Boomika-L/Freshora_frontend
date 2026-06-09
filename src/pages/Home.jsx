@@ -35,10 +35,10 @@ function Home() {
           <div className="buttons">
             <Link to="/products">
               <button className="shop-btn">Shop Now</button>
-              <button className="explore-btn">Explore</button>
+             
             </Link>
 
-            {/* <button className="explore-btn">Explore</button> */}
+             <button className="explore-btn">Explore</button> 
           </div>
 
           <div className="stats">
