@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../assests/styles/ProductManagement.css";
-
+import AdminLayout from "../components/AdminLayout";
 function ProductManagement() {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
@@ -53,6 +53,7 @@ function ProductManagement() {
   };
 
   return (
+      <AdminLayout>
     <div className="manage-products">
       <div className="top-bar">
         <h1>Product Management</h1>
