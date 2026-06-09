@@ -34,15 +34,13 @@ function Products() {
     fetchProducts();
   }, [API]);
 
-  const addToCart = async (product) => {
+const addToCart = async (product) => {
   try {
-    const API = process.env.REACT_APP_API_URL;
     const email = localStorage.getItem("userEmail");
 
-  
     if (!email) {
       alert("Please login first to add items to cart");
-      navigate("/login"); 
+      navigate("/login");
       return;
     }
 
@@ -51,7 +49,7 @@ function Products() {
       name: product.name,
       image: product.image,
       price: product.price,
-      quantity: 1,
+      quantity: product.quantity || 1,
       userEmail: email,
     });
 
