@@ -40,7 +40,7 @@ function ProductManagement() {
 
       alert(res.data?.message || "Product deleted");
 
-      // refresh list after delete
+     
       const updated = await axios.get(
         `${API}/api/product/all-products`
       );
@@ -134,6 +134,7 @@ function ProductManagement() {
         </table>
       </div>
     </div>
+         </AdminLayout>
   );
 }
 
