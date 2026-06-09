@@ -49,7 +49,15 @@ function Navbar() {
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
       />
       <div className="logo-section">
-        <img src={logo} alt="logo" />
+        
+          <Link to="/">
+        <img
+          src={logo}
+          alt="Freshora Logo"
+          className="logo"
+        />
+            <h1>FRESHORA</h1>
+      </Link>
         <h1>FRESHORA</h1>
       </div>
 
