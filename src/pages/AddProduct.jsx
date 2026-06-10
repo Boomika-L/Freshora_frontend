@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "../assests/styles/AddProduct.css";
-
+import Navbar from "./../components/Navbar";
 function AddProduct() {
   const [product, setProduct] = useState({
     name: "",
@@ -45,6 +45,7 @@ function AddProduct() {
   };
 
   return (
+    <><Navbar/>
     <div className="add-product-container">
       <h1>Add Product</h1>
 
@@ -109,6 +110,7 @@ function AddProduct() {
         <button type="submit">Add Product</button>
       </form>
     </div>
+    </>
   );
 }
 
