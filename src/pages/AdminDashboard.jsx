@@ -84,8 +84,25 @@ function AdminDashboard() {
                 <th>Amount</th>
               </tr>
             </thead>
+<tbody>
+  {stats.recentOrders?.map((order) => (
+    <tr key={order._id}>
+      <td>
+        {order.items?.map((item) => item.name).join(", ")}
+      </td>
 
-            <tbody>
+      <td>
+        {order.items?.reduce(
+          (total, item) => total + item.quantity,
+          0
+        )}
+      </td>
+
+      <td>₹{order.totalAmount}</td>
+    </tr>
+  ))}
+</tbody>
+            {/* <tbody>
               {stats.recentOrders?.map((order) => (
                 <tr key={order._id}>
                   <td>{order.name}</td>
@@ -93,7 +110,7 @@ function AdminDashboard() {
                   <td>₹{order.totalAmount}</td>
                 </tr>
               ))}
-            </tbody>
+            </tbody> */}
           </table>
         </div>
 
