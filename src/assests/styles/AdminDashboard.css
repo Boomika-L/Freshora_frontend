@@ -81,7 +81,8 @@ th {
   text-align: left;
   padding: 12px;
   font-size: 14px;
-  color: #374151;
+  /* color: #374151; */
+  color: #ffffff !important;
   border-bottom: 2px solid #e5e7eb;
 }
 
