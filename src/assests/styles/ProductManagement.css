@@ -73,7 +73,7 @@ tr:hover {
 }
 
 
-.actions-cell {
+/* .actions-cell {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -112,8 +112,42 @@ tr:hover {
 .delete-btn:hover {
   transform: translateY(-2px);
   opacity: 0.9;
+} */
+.actions-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
 }
 
+.edit-btn,
+.delete-btn {
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  min-width: 75px;
+  height: 36px;
+  transition: 0.3s ease;
+}
+
+.edit-btn {
+  background: #3498db;
+  color: white;
+}
+
+.delete-btn {
+  background: #e74c3c;
+  color: white;
+}
+
+.edit-btn:hover,
+.delete-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
 @media (max-width: 768px) {
   .manage-products {
     padding: 15px;
